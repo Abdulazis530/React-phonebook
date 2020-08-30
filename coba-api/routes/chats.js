@@ -16,12 +16,14 @@ router.post('/', function (req, res, next) {
   Chat.create({ id, name, message }).then((data) => {
     res.status(201).json(data)
   }).catch((err) => {
+    console.log(err)
     res.status(500).json(err)
   })
 });
 
 router.delete('/:id', function (req, res, next) {
   const { id } = req.params;
+  console.log(id)
   Chat.findOneAndRemove({id: Number(id)}).then((data) => {
     res.status(201).json(data)
   }).catch((err) => {

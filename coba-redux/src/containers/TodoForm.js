@@ -1,6 +1,8 @@
 import React from 'react'
+import {postChat} from '../actions'
+import {connect} from 'react-redux'
 
-export default class TodoForm extends React.Component {
+ class TodoForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = { name: '', message: '' };
@@ -20,7 +22,7 @@ export default class TodoForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.add(this.state.name, this.state.message);
+        this.props.addChat(this.state.name, this.state.message);
         this.setState({name: '', message: ''})
     }
 
@@ -40,3 +42,15 @@ export default class TodoForm extends React.Component {
         );
     }
 }
+
+
+
+
+const mapDispatchToProps = (dispatch) => ({
+    addChat: (name,message) => dispatch(postChat(name,message))
+})
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(TodoForm)

@@ -3,10 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import TodoBox from './components/TodoBox'
 import * as serviceWorker from './serviceWorker';
+import rootReducer from './reducer';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
+const store = createStore(rootReducer, applyMiddleware(thunk))
+//thunk used to get asyncronus data from beckend in reducer, so react won't block it
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <TodoBox />
+    <Provider store={store}>
+      <TodoBox />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

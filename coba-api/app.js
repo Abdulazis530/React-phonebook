@@ -5,7 +5,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors')
 
-mongoose.connect('mongodb://localhost:27017/chatdb', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/cobaRedux', {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 var indexRouter = require('./routes/index');
