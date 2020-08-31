@@ -1,6 +1,6 @@
 var GraphQLSchema = require('graphql').GraphQLSchema;
 var GraphQLObjectType = require('graphql').GraphQLObjectType;
-var queryType = require('./queries/users').queryType;
+var queryType = require('./queries/phones').queryType;
 var mutation = require('./mutations/index');
 
 exports.userSchema = new GraphQLSchema({

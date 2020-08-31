@@ -1,12 +1,11 @@
-var GraphQLNonNull = require('graphql').GraphQLNonNull;
-var GraphQLString = require('graphql').GraphQLString;
-var UserType = require('../types/user');
+const{GraphQLNonNull,GraphQLString}=require('graphql')
 var services = require('../../services');
+const { phoneType } = require('../types/phone');
 
 exports.remove = {
-    type: UserType.userType,
+    type: phoneType,
     args: {
-        userName: {
+        id: {
             type: new GraphQLNonNull(GraphQLString)
         }
     },
