@@ -15,15 +15,15 @@ mutation {
 }
 
   mutation {
-    updateUser(id:"1598917884554" Name:"greenUpdate", PhoneNumber:"02132103022213") {
-      userName
+    updateContact(id:"1598917884554" Name:"greenUpdate", PhoneNumber:"02132103022213") {
+      PhoneNumber
       Name
     }
 }
   
   
   mutation {
-    removeUser(userName: "green") {
-      userName
+    removeContact(id:"1598917884554") {
+      
     }
 }

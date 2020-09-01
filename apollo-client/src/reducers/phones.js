@@ -1,8 +1,8 @@
-const users = (state = [], action) => {
+const phones = (state = [], action) => {
   switch (action.type) {
-    case 'LOAD_USER_SUCCESS':
-    return action.users.map((item)=>{
-      item.sent = true;
+    case 'LOAD_PHONE_SUCCESS':
+    return action.phones.map((item)=>{
+      item.added = true;
       return item
     })
 
@@ -37,11 +37,11 @@ const users = (state = [], action) => {
     case 'DELETE_USER_SUCCESS':
     return state
 
-    case 'LOAD_USER_FAILURE':
+    case 'LOAD_PHONE_FAILURE':
     case 'DELETE_USER_FAILURE':
     default:
     return state
   }
 }
 
-export default users
+export default phones

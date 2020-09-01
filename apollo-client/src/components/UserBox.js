@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import UserList from '../containers/UserList';
+import PhoneList from '../containers/PhoneList';
 import UserForm from '../containers/UserForm';
 
 export default class UserBox extends Component {
@@ -11,7 +11,7 @@ export default class UserBox extends Component {
             RUBICAMP STUDENTS
           </div>
           <div className="card-body">
-            <UserList />
+            <PhoneList />
             <UserForm />
           </div>
           <div className="card-footer text-center">

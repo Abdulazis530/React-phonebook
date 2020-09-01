@@ -9,22 +9,22 @@ const client = new ApolloClient({
 
 
 // start load user data
-export const loadUserSuccess = (users) => ({
-  type: 'LOAD_USER_SUCCESS',
-  users
+export const loadPhoneSuccess = (phones) => ({
+  type: 'LOAD_PHONE_SUCCESS',
+  phones
 })
 
-export const loadUserFailure = () => ({
-  type: 'LOAD_USER_FAILURE'
+export const loadPhoneFailure = () => ({
+  type: 'LOAD_PHONE_FAILURE'
 })
 
-export const loadUser = () => {
+export const loadPhone = () => {
   const usersQuery = gql`
   query {
-    users{
-      userName
+    phones{
+      PhoneNumber
       Name
-      Age
+      id
     }
   }`;
   return dispatch => {
@@ -33,11 +33,11 @@ export const loadUser = () => {
     })
     .then(function (response) {
       console.log(response);
-      dispatch(loadUserSuccess(response.data.users))
+      dispatch(loadPhoneSuccess(response.data.phones))
     })
     .catch(function (error) {
       console.error(error);
-      dispatch(loadUserFailure())
+      dispatch(loadPhoneFailure())
     });
   }
 }
@@ -62,15 +62,14 @@ const postUserRedux = (userName, Name, Age) => ({
 
 export const postUser = (userName, Name, Age) => {
   const addQuery = gql`
-  mutation updateUser($userName: String!, $Name: String!, $Age: String!) {
-    addUser(userName: $userName, Name: $Name, Age: $Age) {
-      userName
+  mutation updateUser($Name: String!, $PhoneNumber: String!) {
+    addContact(Name: $Name, PhoneNumber: $PhoneNumber) {
+      PhoneNumber
       Name
-      Age
     }
   }`;
   return dispatch => {
-    dispatch(postUserRedux(userName, Name, Age))
+    dispatch(postUserRedux(userName, Name))
     return client.mutate({
       mutation: addQuery,
       variables: {
