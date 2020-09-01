@@ -6,9 +6,36 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #B0E0DF;
+  background-image: url("background1.jpeg");
+  background-position: center center fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.centering {
+  text-align: center
+}
+
+.del {
+  margin-right: 3%;
+}
+
+.main-container {
+  border-radius: 25px;
+  overflow: hidden;
+  margin-top: 10vh;
+  margin-bottom:10vh
+}
+.jumbotron{
+  color: white;
+  background-color: rgba(0, 0,0, 0.6);
 }

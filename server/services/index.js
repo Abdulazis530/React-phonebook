@@ -23,11 +23,11 @@ const getPhones = () => {
 
 //Create new instance
 const addPhones = (phone) => {
-  const id = Date.now()
-  const referencePath = `/Phones/${id}/`;
+  // const id = Date.now()
+  const referencePath = `/Phones/${phone.id}/`;
   const phoneReference = firebase.database().ref(referencePath);
   return (new Promise((resolve, reject) => {
-    phoneReference.set({ Name: phone.Name, PhoneNumber: phone.PhoneNumber, id }, (error) => {
+    phoneReference.set({ Name: phone.Name, PhoneNumber: phone.PhoneNumber }, (error) => {
       if (error) {
         reject("Data could not be added." + error);
       } else {

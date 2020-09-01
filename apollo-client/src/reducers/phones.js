@@ -1,46 +1,50 @@
 const phones = (state = [], action) => {
   switch (action.type) {
     case 'LOAD_PHONE_SUCCESS':
-    return action.phones.map((item)=>{
-      item.added = true;
-      return item
-    })
+      return action.phones.map((item) => {
+        item.added = true;
+        return item
+      })
 
-    case 'POST_USER':
-    return [
-      ...state,
-      {
-        userName: action.userName,
-        Name: action.Name,
-        Age: action.Age,
-        sent: true
-      }
-    ]
+    case 'POST_PHONE':
+      console.log(state)
+      console.log(action)
+      return [
+        ...state,
+        {
+          PhoneNumber: action.PhoneNumber,
+          Name: action.Name,
+          added: true,
+          id:action.id
+        }
+      ]
 
-    case 'POST_USER_SUCCESS':
-    return state.map((item)=>{
-      item.sent = true;
-      return item
-    })
+    case 'RESEND_PHONE_SUCCESS':
+      return state.map((item) => {
+        if (item.id === action.id) item.added = true
+        return item
+      })
+    case 'POST_PHONE_SUCCESS':
+     return state
 
-    case 'POST_USER_FAILURE':
-    return state.map((item)=>{
-      if(item.userName === action.userName){
-        item.sent = false;
-      }
-      return item
-    })
+    case 'POST_PHONE_FAILURE':
+      return state.map((item) => {
+        if (item.PhoneNumber === action.PhoneNumber) {
+          item.added = false;
+        }
+        return item
+      })
 
-    case 'DELETE_USER':
-    return state.filter((item) => item.userName !== action.userName)
+    case 'DELETE_PHONE':
+      return state.filter((item) => item.id !== action.id)
 
-    case 'DELETE_USER_SUCCESS':
-    return state
+    case 'DELETE_PHONE_SUCCESS':
+      return state
 
     case 'LOAD_PHONE_FAILURE':
-    case 'DELETE_USER_FAILURE':
+    case 'DELETE_PHONE_FAILURE':
     default:
-    return state
+      return state
   }
 }
 

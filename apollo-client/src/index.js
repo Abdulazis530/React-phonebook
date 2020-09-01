@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import UserBox from './components/UserBox';
+import PhoneBox from './components/PhoneBox';
 import rootReducer from './reducers';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 
 ReactDOM.render(
   <Provider store={store}>
-  <UserBox />
+  <PhoneBox />
   </Provider>
   , document.getElementById('root'));
 

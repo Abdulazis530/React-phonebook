@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import User from './UserActive';
+import Phone from './PhoneActive';
 import { connect } from 'react-redux';
 import { loadPhone } from '../actions'
 
@@ -11,9 +11,8 @@ class PhoneList extends Component {
 
   render() {
     const nodes = this.props.stateFromMaps.map((item, index) => {
-      console.log(index)
       return (
-        <User
+        <Phone
           key={index}
           index={index}
           phone={item.PhoneNumber}
@@ -23,9 +22,10 @@ class PhoneList extends Component {
         />)
     })
     return (
-      <table className="table table-striped table-dark">
+      <div>
+      <table className="table table-striped table-light centering  table-hover">
         <thead>
-          <tr>
+          <tr className='table-secondary'>
             <th scope="col">No</th>
             <th scope="col">Name</th>
             <th scope="col">Phone</th>
@@ -36,6 +36,8 @@ class PhoneList extends Component {
           {nodes}
         </tbody>
       </table>
+      
+      </div>
     )
   }
 }

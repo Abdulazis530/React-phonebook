@@ -32,7 +32,6 @@ export const loadPhone = () => {
       query: usersQuery,
     })
     .then(function (response) {
-      console.log(response);
       dispatch(loadPhoneSuccess(response.data.phones))
     })
     .catch(function (error) {
@@ -46,115 +45,123 @@ export const loadPhone = () => {
 
 // start post user data
 
-export const postUserSuccess = (users) => ({
-  type: 'POST_USER_SUCCESS',
-  users
+export const postPhoneSuccess = (phones) => ({
+  type: 'POST_PHONE_SUCCESS',
+  phones
 })
 
-export const postUserFailure = (userName) => ({
-  type: 'POST_USER_FAILURE', userName
+export const postPhoneFailure = (PhoneNumber) => ({
+  type: 'POST_PHONE_FAILURE', PhoneNumber
 })
 
-const postUserRedux = (userName, Name, Age) => ({
-  type: 'POST_USER', userName, Name, Age
+const postPhoneRedux = (PhoneNumber, Name,id) => ({
+  type: 'POST_PHONE', PhoneNumber, Name,id
 })
 
 
-export const postUser = (userName, Name, Age) => {
+export const postPhone = (PhoneNumber, Name,id) => {
   const addQuery = gql`
-  mutation updateUser($Name: String!, $PhoneNumber: String!) {
-    addContact(Name: $Name, PhoneNumber: $PhoneNumber) {
+  mutation addContact($Name: String!, $PhoneNumber: String!,$id:ID!) {
+    addContact(Name: $Name, PhoneNumber: $PhoneNumber,id:$id) {
       PhoneNumber
       Name
     }
   }`;
   return dispatch => {
-    dispatch(postUserRedux(userName, Name))
+    dispatch(postPhoneRedux(PhoneNumber, Name,id))
     return client.mutate({
       mutation: addQuery,
       variables: {
-        userName,
+        PhoneNumber,
         Name,
-        Age
+        id
       }
     })
     .then(function (response) {
-      dispatch(postUserSuccess(response.data))
+      dispatch(postPhoneSuccess(response.data))
     })
     .catch(function (error) {
       console.error(error);
-      dispatch(postUserFailure(userName))
+      dispatch(postPhoneFailure(PhoneNumber))
     });
   }
 }
 
 // start delete user data
 
-const deleteUserRedux = (userName) => ({
-  type: 'DELETE_USER', userName
+const deletePhoneRedux = (id) => ({
+  type: 'DELETE_PHONE', id
 })
 
-export const deleteUserSuccess = (users) => ({
-  type: 'DELETE_USER_SUCCESS',
+export const deletePhoneSuccess = (users) => ({
+  type: 'DELETE_PHONE_SUCCESS',
   users
 })
 
-export const deleteUserFailure = () => ({
-  type: 'DELETE_USER_FAILURE'
+export const deletePhoneFailure = () => ({
+  type: 'DELETE_PHONE_FAILURE'
 })
 
 
-export const deleteUser = (userName) => {
+export const deletePhone = (id) => {
+
   const deleteQuery = gql`
-  mutation removeUser($userName: String!) {
-    removeUser(userName: $userName) {
-      userName
+  mutation removeContact($id: ID!) {
+    removeContact(id: $id) {
+      id
     }
   }`;
   return dispatch => {
-    dispatch(deleteUserRedux(userName))
+    dispatch(deletePhoneRedux(id))
     return client.mutate({
       mutation: deleteQuery,
       variables: {
-        userName
+        id
       }
     })
     .then(function (response) {
-      dispatch(deleteUserSuccess(response))
+      dispatch(deletePhoneSuccess(response))
     })
     .catch(function (error) {
       console.error(error);
-      dispatch(deleteUserFailure())
+      dispatch(deletePhoneFailure())
     });
   }
 }
 
 // end delete user data
 
-export const resendUser = (userName, Name, Age) => {
+
+const resendPhoneSuccess = (id) => ({
+  type: 'RESEND_PHONE_SUCCESS',
+  id
+})
+
+
+export const resendPhone = (PhoneNumber, Name,id) => {
   const addQuery = gql`
-  mutation updateUser($userName: String!, $Name: String!, $Age: String!) {
-    addUser(userName: $userName, Name: $Name, Age: $Age) {
-      userName
+  mutation addContact($PhoneNumber: String!, $Name: String!) {
+    addContact(PhoneNumber: $PhoneNumber, Name: $Name) {
+      PhoneNumber
       Name
-      Age
     }
   }`;
   return dispatch => {
     return client.mutate({
       mutation: addQuery,
       variables: {
-        userName,
-        Name,
-        Age
+        PhoneNumber,
+        Name
       }
     })
     .then(function (response) {
-      dispatch(postUserSuccess(response))
+      dispatch(resendPhoneSuccess(id))
     })
     .catch(function (error) {
       console.error(error);
-      dispatch(postUserFailure(userName))
+      dispatch(postPhoneFailure(id))
     });
   }
 }
+
+
