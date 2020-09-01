@@ -3,7 +3,7 @@
 const{GraphQLNonNull,GraphQLString}=require('graphql')
 const { phoneType } = require('../types/phone');
 const services = require('../../services');
-exports.update = {
+exports.updateContact = {
   type: phoneType,
   args: {
     id: {
@@ -17,6 +17,6 @@ exports.update = {
     }
   },
   resolve(root, params) {
-    return services.updateUser(params)
+    return services.updatePhone(params)
   }
 }

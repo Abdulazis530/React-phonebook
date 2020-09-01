@@ -1,26 +1,23 @@
 {
-    users {
-      userName
-      Name
-      Age
-    }
+  phones {
+    Name
+  	PhoneNumber
+    id
+  }
 }
+
   
-  
-  mutation {
-    addUser(userName: "green", Name: "barry allan", Age: "17") {
-      userName
-      Name
-      Age
-    }
+mutation {
+  addContact(Name: "green3", PhoneNumber: "02132103022213") {
+    Name
+    PhoneNumber
+  }
 }
-  
-  
+
   mutation {
-    updateUser(userName: "green", Name: "peter", Age: "30") {
+    updateUser(id:"1598917884554" Name:"greenUpdate", PhoneNumber:"02132103022213") {
       userName
       Name
-      Age
     }
 }
   

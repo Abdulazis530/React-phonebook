@@ -2,7 +2,7 @@ const{GraphQLNonNull,GraphQLString}=require('graphql')
 var services = require('../../services');
 const { phoneType } = require('../types/phone');
 
-exports.remove = {
+exports.removeContact = {
     type: phoneType,
     args: {
         id: {
@@ -10,6 +10,6 @@ exports.remove = {
         }
     },
     resolve(root, params) {
-        return services.deleteUser(params);
+        return services.deletePhone(params);
     }
 }

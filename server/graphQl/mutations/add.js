@@ -2,12 +2,9 @@ const{GraphQLNonNull,GraphQLString}=require('graphql')
 const { phoneType } = require('../types/phone');
 var services = require('../../services');
 
-exports.add = {
+exports.addContact = {
     type:phoneType,
     args: {
-        id: {
-            type: new GraphQLNonNull(GraphQLString),
-        }, 
         Name: {
             type: new GraphQLNonNull(GraphQLString),
         },

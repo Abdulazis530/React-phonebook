@@ -5,10 +5,12 @@ const getPhones = () => {
   return (new Promise((resolve, reject) => {
     phoneReference.on("value", function (snapshot) {
       const folders = snapshot.val();
+      console.log(folders)
       if (folders === null) {
         resolve([]);
       } else {
-        const data = Object.keys(folders).map(o => Object.assign({ phoneId: o }, folders[o]));
+        const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]));
+        console.log(data)
         resolve(data);
       }
       phoneReference.off("value");
@@ -21,10 +23,11 @@ const getPhones = () => {
 
 //Create new instance
 const addPhones = (phone) => {
-  const referencePath = `/Phones/${phone.id}/`;
+  const id = Date.now()
+  const referencePath = `/Phones/${id}/`;
   const phoneReference = firebase.database().ref(referencePath);
   return (new Promise((resolve, reject) => {
-    phoneReference.set({ Name: phone.Name, PhoneNumber: phone.PhoneNumber }, (error) => {
+    phoneReference.set({ Name: phone.Name, PhoneNumber: phone.PhoneNumber, id }, (error) => {
       if (error) {
         reject("Data could not be added." + error);
       } else {
