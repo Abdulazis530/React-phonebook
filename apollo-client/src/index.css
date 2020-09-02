@@ -38,10 +38,13 @@ code {
 }
 .jumbotron{
   color: white;
-  background-color: rgba(0, 0,0, 0.6);
+  background-color: rgba(0, 0,0,0.6);
   
 }
 .jumbotron h1{
   font-family: 'Poppins', sans-serif;
   
+}
+.btn-add,.btn-cancel{
+  margin-left:1em
 }

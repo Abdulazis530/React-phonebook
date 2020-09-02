@@ -6,13 +6,9 @@ import { TogleButtonCta } from '../actions'
 
 class Jumbotron extends Component {
     
-    handleClick=(event)=>{
-      
+    handleClick=(event)=>{  
         event.preventDefault()
-
         this.props.togleButtonCta()
-  
-
     }
     render() {
         

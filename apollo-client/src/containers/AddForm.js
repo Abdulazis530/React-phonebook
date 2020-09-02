@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postPhone } from '../actions'
+import { postPhone,TogleButtonCta } from '../actions'
 
 class Addform extends Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class Addform extends Component {
         this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handlePhoneNumberChange(event) {
@@ -25,7 +26,10 @@ class Addform extends Component {
         this.setState({ Name: event.target.value });
     }
 
-
+    handleClick(event){  
+        event.preventDefault()
+        this.props.togleButtonCta()
+    } 
 
     handleSubmit(event) {
         const id = Date.now()
@@ -37,18 +41,18 @@ class Addform extends Component {
     }
 
     render() {
-       
+
         return (
-            
+
             <div>
                 <div className="card text-left" >
                     <div className="card-header text-center font-weight-bold">
                         ADD CONTACT
                      </div>
                     <div className="card-body">
-                        <form onSubmit={this.handleSubmit} >
+                        <form onSubmit={this.handleSubmit} className="form-inline justify-content-center">
                             <div className="form-group row">
-                                <label htmlFor="phoneNumber" className="col-sm-2 col-form-label">Phone Number</label>
+                                <label htmlFor="phoneNumber" className="col-sm-2 col-form-label">Number</label>
                                 <div className="col-sm-10">
                                     <input type="text" className="form-control" id="phoneNumber" name="phoneNumber" value={this.state.PhoneNumber} onChange={this.handlePhoneNumberChange} placeholder="Phone Number" />
                                 </div>
@@ -60,11 +64,14 @@ class Addform extends Component {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <div className="col-sm-10">
-                                    <button type="submit" className="btn btn-primary float-left">Tambah</button>
+                            <div className="form-group row align-self-center">
+                                <div className="col-sm-12">
+                                    <button type="button" className="btn btn-warning  btn-cancel float-right" onClick={this.handleClick}><i className="fas fa-ban"></i> Cancel </button>
+
+                                    <button type="submit" className="btn btn-primary  btn-add float-right"> <i className="fas fa-plus"></i> Add</button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -76,7 +83,9 @@ class Addform extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    postPhone: (phoneNumber, Name, id) => dispatch(postPhone(phoneNumber, Name, id))
+    postPhone: (phoneNumber, Name, id) => dispatch(postPhone(phoneNumber, Name, id)),
+    togleButtonCta: () => dispatch(TogleButtonCta())
+
 })
 
 export default connect(
