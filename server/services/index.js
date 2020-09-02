@@ -39,6 +39,7 @@ const addPhones = (phone) => {
 
 //Update existing instance
 const updatePhone = (phone) => {
+  console.log(phone)
   var referencePath = `/Phones/${phone.id}/`;
   var phoneReference = firebase.database().ref(referencePath);
   return (new Promise((resolve, reject) => {
@@ -46,6 +47,7 @@ const updatePhone = (phone) => {
       if (error) {
         reject("Data could not be updated." + error);
       } else {
+        console.log(phone)
         resolve(phone);
       }
     });
@@ -54,6 +56,7 @@ const updatePhone = (phone) => {
 
 //Delete an instance
 const deletePhone = (phone) => {
+
   var referencePath = `/Phones/${phone.id}/`;
   var phoneReference = firebase.database().ref(referencePath);
   return (new Promise((resolve, reject) => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Phone from './PhoneActive';
+import EditForm from './EditForm'
 import { connect } from 'react-redux';
 import { loadPhone } from '../actions'
 
@@ -11,15 +12,32 @@ class PhoneList extends Component {
 
   render() {
     const nodes = this.props.stateFromMaps.map((item, index) => {
-      return (
-        <Phone
-          key={index}
-          index={index}
-          phone={item.PhoneNumber}
-          Name={item.Name}
-          added={item.added}
-          id={item.id}
-        />)
+      console.log(item.isEdit)
+      return item.isEdit ?
+
+        (
+          <EditForm
+            key={index}
+            index={index}
+            phone={item.PhoneNumber}
+            Name={item.Name}
+            added={item.added}
+            id={item.id}
+            edit={item.isEdit}
+          />)
+        :
+        (
+          <Phone
+            key={index}
+            index={index}
+            phone={item.PhoneNumber}
+            Name={item.Name}
+            added={item.added}
+            id={item.id}
+            edit={item.isEdit}
+          />)
+
+
     })
     return (
       <div>
@@ -42,7 +60,7 @@ class PhoneList extends Component {
   }
 }
 
-const mapStateToProps = ({phones}) => {
+const mapStateToProps = ({ phones }) => {
   console.log(phones)
   return { stateFromMaps: phones.phones }
   //word users taken from reducer/index.js
@@ -54,8 +72,8 @@ const mapStateToProps = ({phones}) => {
 
 const mapDispatchToProps = (dispatch) => {
   console.log(dispatch)
- return {
-  loadPhoneFormMap: () => dispatch(loadPhone())
+  return {
+    loadPhoneFormMap: () => dispatch(loadPhone())
   }
 }
 

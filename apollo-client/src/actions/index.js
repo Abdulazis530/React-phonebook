@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import Swal from 'sweetalert2'
 
 
+
 const API_URL = 'http://localhost:3001/graphql/'
 
 const client = new ApolloClient({
@@ -207,8 +208,148 @@ const togleThisButton = () => ({
 })
 
 
-export const TogleButtonCta=()=>{
-  return dispatch=>{
+export const TogleButtonCta = () => {
+  return dispatch => {
     dispatch(togleThisButton())
   }
 }
+
+
+const clickEdit = (id) => ({
+  type: 'EDIT_CLICK',
+  id
+})
+
+export const clickEditAct = (id) => {
+  return dispatch => {
+    dispatch(clickEdit(id))
+  }
+}
+
+const cancelEdit = (id) => ({
+  type: 'EDIT_CLICK_CANCEL',
+  id
+})
+
+export const clickCancelEditAct = (id) => {
+  return dispatch => {
+    dispatch(cancelEdit(id))
+  }
+}
+
+
+const updateRedux = (PhoneNumber, id, Name) => ({
+  type: 'UPDATE_PHONE',
+  id,
+  PhoneNumber,
+  Name
+})
+
+const updatePhoneSuccess = (phone) => ({
+  type: 'UPDATE_PHONE_SUCCESS',
+  phone
+})
+const updatePhoneFailure = (id) => ({
+  type: "UPDATE_PHONE_FAILURE",
+  id
+})
+
+export const editUpdatePhone = (PhoneNumber, id, Name) => {
+  console.log('wqewqkelqweklqwekql;w')
+  console.log(PhoneNumber)
+  console.log(Name)
+  console.log(id)
+  const updateQuery = gql`
+  mutation updateContact($PhoneNumber: String!, $Name: String!,$id:ID!){
+    updateContact(PhoneNumber: $PhoneNumber, Name: $Name,id:$id ){
+        PhoneNumber,
+        Name,
+        id
+      }
+    }`;
+  return dispatch => {
+    dispatch(updateRedux(PhoneNumber,id,Name))
+  
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Contact updated successfully!',
+      showConfirmButton: false,
+      timer: 1200
+    }).then(() => {
+      return client.mutate({
+        mutation: updateQuery,
+        variables: {
+          PhoneNumber,
+          Name,
+          id
+        }
+      })
+    }).then(function (response) {
+      dispatch(updatePhoneSuccess(response.data))
+    }).catch(function (error) {
+      Swal.fire({
+        icon: 'warning',
+        title: "Network connection trouble!",
+        text: "Failed to update data!",
+        type: "warning",
+        buttons: true,
+        dangerMode: true,
+        timer: 1500
+      }).then(() => {
+        dispatch(updatePhoneFailure(id))
+      })
+    })
+  }
+}
+
+    
+
+
+
+// export const postPhone = (PhoneNumber, Name, id) => {
+//   const addQuery = gql`
+//   mutation addContact($Name: String!, $PhoneNumber: String!,$id:ID!) {
+//     addContact(Name: $Name, PhoneNumber: $PhoneNumber,id:$id) {
+//       PhoneNumber
+//       Name
+//     }
+//   }`;
+//   return dispatch => {
+//     Swal.fire({
+//       position: 'center',
+//       icon: 'success',
+//       title: 'Contact added successfully!',
+//       showConfirmButton: false,
+//       timer: 1200
+//     }).then(() => {
+//       dispatch(postPhoneRedux(PhoneNumber, Name, id))
+//       return client.mutate({
+//         mutation: addQuery,
+//         variables: {
+//           PhoneNumber,
+//           Name,
+//           id
+//         }
+//       })
+//         .then(function (response) {
+//           dispatch(postPhoneSuccess(response.data))
+//         })
+//         .catch(function (error) {
+//           Swal.fire({
+//             icon: 'warning',
+//             title: "Network connection trouble!",
+//             text: "Click resend button to add your data!",
+//             type: "warning",
+//             buttons: true,
+//             dangerMode: true,
+//             timer: 1500
+//           }).then(() => {
+//             dispatch(postPhoneFailure(id))
+//           })
+
+//         });
+//     })
+
+//   }
+// }

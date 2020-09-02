@@ -15,7 +15,8 @@ const Phone = (props) => {
 
         <button
           type="button"
-          className="btn btn-outline-success ed"
+          className="btn btn-outline-success" 
+          onClick={props.onEdit}
         >
       <i className="fas fa-edit"></i>
         </button>

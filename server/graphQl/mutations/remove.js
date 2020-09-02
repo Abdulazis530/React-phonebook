@@ -1,4 +1,4 @@
-const{GraphQLNonNull,GraphQLString,GraphQLID}=require('graphql')
+const{GraphQLNonNull,GraphQLID}=require('graphql')
 var services = require('../../services');
 const { phoneType } = require('../types/phone');
 
