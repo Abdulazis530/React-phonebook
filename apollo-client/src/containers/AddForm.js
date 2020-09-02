@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postPhone } from '../actions'
 
-class PhoneForm extends Component {
+class Addform extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -37,7 +37,9 @@ class PhoneForm extends Component {
     }
 
     render() {
+       
         return (
+            
             <div>
                 <div className="card text-left" >
                     <div className="card-header text-center font-weight-bold">
@@ -80,4 +82,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     null,
     mapDispatchToProps
-)(PhoneForm)
+)(Addform)

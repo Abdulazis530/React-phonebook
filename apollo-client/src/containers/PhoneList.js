@@ -23,37 +23,41 @@ class PhoneList extends Component {
     })
     return (
       <div>
-      <table className="table table-striped table-light centering  table-hover">
-        <thead>
-          <tr className='table-secondary'>
-            <th scope="col">No</th>
-            <th scope="col">Name</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {nodes}
-        </tbody>
-      </table>
-      
+        <table className="table table-striped table-light centering  table-hover">
+          <thead>
+            <tr className='table-secondary'>
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {nodes}
+          </tbody>
+        </table>
+
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  stateFromMaps: state.phones
+const mapStateToProps = ({phones}) => {
+  console.log(phones)
+  return { stateFromMaps: phones.phones }
   //word users taken from reducer/index.js
   // export default combineReducers({
   //   phones
   // })
 
-})
+}
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch)
+ return {
   loadPhoneFormMap: () => dispatch(loadPhone())
-})
+  }
+}
 
 export default connect(
   mapStateToProps,
