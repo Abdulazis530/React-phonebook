@@ -36,13 +36,13 @@ class SearchForm extends Component {
                             <div className="form-group row">
                                 <label htmlFor="phoneNumber" className="col-sm-2 col-form-label">Number</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" id="phoneNumber" name="phoneNumber" value={this.state.PhoneNumber} onChange={this.handlePhoneNumberChange} placeholder="Phone Number" />
+                                    <input type="text" className="form-control" id="phoneNumber" name="phoneNumber" value={this.state.PhoneNumber} onChange={this.handlePhoneNumberChange} placeholder="Search Phone Number" />
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="Name" className="col-sm-2 col-form-label">Name</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" id="Name" name="Name" value={this.state.Name} onChange={this.handleNameChange} placeholder="Name" />
+                                    <input type="text" className="form-control" id="Name" name="Name" value={this.state.Name} onChange={this.handleNameChange} placeholder="Search Name" />
                                 </div>
                             </div>
 
