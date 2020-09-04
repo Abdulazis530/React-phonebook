@@ -21,31 +21,6 @@ export const loadPhoneSuccess = ({totalData,items}) => ({
 export const loadPhoneFailure = () => ({
   type: 'LOAD_PHONE_FAILURE'
 })
-// export const loadPhone = (offset=0,limit=5) => {
-//   const usersQuery = gql`
-//   query {
-//     phones{
-//       PhoneNumber
-//       Name
-//       id
-//     }
-//   }`;
-//   return dispatch => {
-//     return client.query({
-//       query: usersQuery,
-//     })
-//       .then(function (response) {
-//         console.log('test',response)
-//         console.log('test query ')
-//         dispatch(loadPhoneSuccess(response.data.phones))
-//       })
-//       .catch(function (error) {
-//         console.error(error);
-//         dispatch(loadPhoneFailure())
-//       });
-//   }
-// }
- 
 
 export const loadPhone = (offset=0,limit=5) => {
   const usersQuery = gql`
@@ -329,61 +304,15 @@ export const editUpdatePhone = (PhoneNumber, id, Name) => {
 }
 
     
+export const nextPage=()=>{
+  return dispatch=>dispatch({
+    type:"NEXT_PAGE"
+  })
+}
 
 
-
-// export const postPhone = (PhoneNumber, Name, id) => {
-//   const addQuery = gql`
-//   mutation addContact($Name: String!, $PhoneNumber: String!,$id:ID!) {
-//     addContact(Name: $Name, PhoneNumber: $PhoneNumber,id:$id) {
-//       PhoneNumber
-//       Name
-//     }
-//   }`;
-//   return dispatch => {
-//     Swal.fire({
-//       position: 'center',
-//       icon: 'success',
-//       title: 'Contact added successfully!',
-//       showConfirmButton: false,
-//       timer: 1200
-//     }).then(() => {
-//       dispatch(postPhoneRedux(PhoneNumber, Name, id))
-//       return client.mutate({
-//         mutation: addQuery,
-//         variables: {
-//           PhoneNumber,
-//           Name,
-//           id
-//         }
-//       })
-//         .then(function (response) {
-//           dispatch(postPhoneSuccess(response.data))
-//         })
-//         .catch(function (error) {
-//           Swal.fire({
-//             icon: 'warning',
-//             title: "Network connection trouble!",
-//             text: "Click resend button to add your data!",
-//             type: "warning",
-//             buttons: true,
-//             dangerMode: true,
-//             timer: 1500
-//           }).then(() => {
-//             dispatch(postPhoneFailure(id))
-//           })
-
-//         });
-//     })
-
-//   }
-// }
-
-
-  // query {
-  //   phones{
-  //     PhoneNumber
-  //     Name
-  //     id
-  //   }
-  // }`;
+export const prevPage=()=>{
+  return dispatch=>dispatch({
+    type:"PREVIOUS_PAGE"
+  })
+}

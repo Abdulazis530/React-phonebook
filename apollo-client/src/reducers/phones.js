@@ -1,9 +1,9 @@
 let globalState = {
   phones: [],
   isActive: false,
-  pages:0,
-  limit:5,
-  currentPage:1
+  pages: 0,
+  limit: 5,
+  currentPage: 1
 
 }
 
@@ -11,7 +11,7 @@ const phones = (state = globalState, action) => {
   switch (action.type) {
     case 'LOAD_PHONE_SUCCESS':
       console.log(action.totalData)
-    console.log(Number(Math.ceil(action.totalData/state.limit)))
+      console.log(Number(Math.ceil(action.totalData / state.limit)))
       return {
         ...state,
         phones: action.items.map((item) => {
@@ -20,7 +20,7 @@ const phones = (state = globalState, action) => {
           return item
         }
         ),
-        pages:Number(Math.ceil(action.totalData/state.limit))
+        pages: Number(Math.ceil(action.totalData / state.limit))
       }
 
     case 'POST_PHONE':
@@ -48,7 +48,14 @@ const phones = (state = globalState, action) => {
       }
 
     case 'POST_PHONE_SUCCESS':
-      return state
+      return {
+        ...state,
+        phones: action.items.map((item) => {
+          item.added = true;
+          item.isEdit = false
+          return item
+        })
+      }
 
     case 'POST_PHONE_FAILURE':
       return {
@@ -61,7 +68,7 @@ const phones = (state = globalState, action) => {
         })
       }
 
-    case 'TOGLE': 
+    case 'TOGLE':
       return {
         ...state,
         isActive: !state.isActive
@@ -128,7 +135,17 @@ const phones = (state = globalState, action) => {
       }
     case 'DELETE_PHONE_SUCCESS':
       return state
-
+    case 'NEXT_PAGE':
+      console.log(action.type)
+      return {
+        ...state,
+        currentPage: state.currentPage + 1
+      }
+    case 'PREVIOUS_PAGE':
+      return {
+        ...state,
+        currentPage: state.currentPage - 1
+      }
     case 'LOAD_PHONE_FAILURE':
     case 'DELETE_PHONE_FAILURE':
     default:
