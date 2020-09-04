@@ -31,9 +31,9 @@ class Addform extends Component {
     } 
 
     handleSubmit(event) {
-        const id = Date.now()
+       
         if (this.state.PhoneNumber && this.state.Name) {
-            this.props.postPhone(this.state.PhoneNumber, this.state.Name, id)
+            this.props.postPhone(this.state.PhoneNumber, this.state.Name)
             this.setState({ PhoneNumber: "", Name: "" });
         }
         event.preventDefault();
@@ -82,9 +82,8 @@ class Addform extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    postPhone: (phoneNumber, Name, id) => dispatch(postPhone(phoneNumber, Name, id)),
-    togleButtonCta: () => dispatch(TogleButtonCta())
-
+    postPhone: (PhoneNumber, Name) => dispatch(postPhone(PhoneNumber, Name)),
+    togleButtonCta: () => dispatch(TogleButtonCta()),
 })
 
 export default connect(

@@ -2,8 +2,6 @@ import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
 import Swal from 'sweetalert2'
 
-
-
 const API_URL = 'http://localhost:3001/graphql/'
 
 const client = new ApolloClient({
@@ -12,17 +10,18 @@ const client = new ApolloClient({
 
 
 // start load user data
-export const loadPhoneSuccess = ({totalData,items}) => ({
+export const loadPhoneSuccess = ({ totalData, items }) => ({
   type: 'LOAD_PHONE_SUCCESS',
   totalData,
-  items
+  items,
+
 })
 
 export const loadPhoneFailure = () => ({
   type: 'LOAD_PHONE_FAILURE'
 })
 
-export const loadPhone = (offset=0,limit=5) => {
+export const loadPhone = (offset = 0, limit = 5) => {
   const usersQuery = gql`
   query{
     phones(pagination:{offset: ${offset}, limit:${limit}}){
@@ -39,7 +38,6 @@ export const loadPhone = (offset=0,limit=5) => {
       query: usersQuery,
     })
       .then(function (response) {
-        console.log(response.data.phones)
         dispatch(loadPhoneSuccess(response.data.phones))
       })
       .catch(function (error) {
@@ -67,12 +65,15 @@ const postPhoneRedux = (PhoneNumber, Name, id) => ({
 })
 
 
-export const postPhone = (PhoneNumber, Name, id) => {
+export const postPhone = (PhoneNumber,Name) => {
+  const id = Date.now()
+  console.log(typeof id)
   const addQuery = gql`
   mutation addContact($Name: String!, $PhoneNumber: String!,$id:ID!) {
     addContact(Name: $Name, PhoneNumber: $PhoneNumber,id:$id) {
-      PhoneNumber
       Name
+      PhoneNumber
+      id
     }
   }`;
   return dispatch => {
@@ -87,15 +88,16 @@ export const postPhone = (PhoneNumber, Name, id) => {
       return client.mutate({
         mutation: addQuery,
         variables: {
-          PhoneNumber,
           Name,
+          PhoneNumber,
           id
         }
       })
         .then(function (response) {
-          dispatch(postPhoneSuccess(response.data))
+          dispatch(postPhoneSuccess(response.data.addContact))
         })
         .catch(function (error) {
+
           Swal.fire({
             icon: 'warning',
             title: "Network connection trouble!",
@@ -160,6 +162,7 @@ export const deletePhone = (id) => {
           }
         })
           .then(function (response) {
+  
             dispatch(deletePhoneSuccess(response))
           })
           .catch(function (error) {
@@ -268,8 +271,8 @@ export const editUpdatePhone = (PhoneNumber, id, Name) => {
       }
     }`;
   return dispatch => {
-    dispatch(updateRedux(PhoneNumber,id,Name))
-  
+    dispatch(updateRedux(PhoneNumber, id, Name))
+
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -302,17 +305,25 @@ export const editUpdatePhone = (PhoneNumber, id, Name) => {
     })
   }
 }
+// const jumpToNextPage=()=>{
 
-    
-export const nextPage=()=>{
-  return dispatch=>dispatch({
-    type:"NEXT_PAGE"
-  })
-}
+// }
+
+export const nextPage = (offset) => ({
+  type: "NEXT_PAGE",
+  offset
+})
 
 
-export const prevPage=()=>{
-  return dispatch=>dispatch({
-    type:"PREVIOUS_PAGE"
-  })
-}
+export const prevPage = (offset) => ({
+  type: "PREVIOUS_PAGE",
+  offset
+})
+
+export const switchPage = (offset, switchToPage) => ({
+
+  type: "SWITCH_PAGE",
+  offset,
+  switchToPage
+
+})

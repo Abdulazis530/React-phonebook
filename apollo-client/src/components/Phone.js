@@ -3,7 +3,7 @@ import React from 'react';
 const Phone = (props) => {
   return (
     <tr>
-      <th scope="row">{props.index + 1}</th>
+      <th scope="row">{props.index}</th>
       <td>{props.Name}
       
       </td>

@@ -13,14 +13,14 @@ class PhoneList extends Component {
 
   render() {
 
-    const nodes = this.props.stateFromMaps.map((item, index) => {
+    const nodes = this.props.stateFromMaps.phones.map((item, index) => {
 
       return item.isEdit ?
 
         (
           <EditForm
             key={index}
-            index={index}
+            index={this.props.stateFromMaps.offset+index+1}
             phone={item.PhoneNumber}
             Name={item.Name}
             added={item.added}
@@ -31,7 +31,7 @@ class PhoneList extends Component {
         (
           <Phone
             key={index}
-            index={index}
+            index={this.props.stateFromMaps.offset + index+1}
             phone={item.PhoneNumber}
             Name={item.Name}
             added={item.added}
@@ -64,11 +64,8 @@ class PhoneList extends Component {
 
 const mapStateToProps = ({ phones }) => {
 
-  return { stateFromMaps: phones.phones }
-  //word users taken from reducer/index.js
-  // export default combineReducers({
-  //   phones
-  // })
+  return { stateFromMaps: phones }
+
 
 }
 

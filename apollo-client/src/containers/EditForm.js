@@ -26,7 +26,7 @@ class EditForm extends Component {
   render() {
     return (
       <tr>
-        <th scope="row">{this.props.index + 1}</th>
+        <th scope="row">{this.props.index}</th>
         <td>
 
           <div className="form-row" onSubmit={this.handleSubmit}>

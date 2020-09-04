@@ -1,27 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { loadPhone, nextPage, prevPage } from '../actions'
+import { loadPhone, nextPage, prevPage,switchPage } from '../actions'
 
 class Pagination extends Component {
 
     handlePrevious
 
-    handleClick = (event) => {
+    handleClick = async(event) => {
         const { currentPage, limit } = this.props.stateFromMaps
-        console.log(limit)
-        console.log(currentPage)
         if (event.target.name === "previousPage") {
             const offset = (currentPage - 2) * limit
-            this.props.clickPrevPage()
+            await  this.props.clickPrevPage(offset)
+            await  this.props.loadPhone(offset)
+
 
         } else if (event.target.name === "nextPage") {
-            console.log(this.props)
             const offset = currentPage * limit
-            this.props.clickNextPage()
+           await this.props.clickNextPage(offset)
+           await this.props.loadPhone(offset)
+
 
         } else {
+            console.log('test ja',typeof event.target.id)
+            console.log(event.target.id-1)
             const offset = (event.target.id - 1) * limit
-            console.log(offset)
+
+            const switchToPage=Number(event.target.id)
+            await this.props.switchPage(offset,switchToPage)
+            await this.props.loadPhone(offset)
         }
         event.preventDefault()
 
@@ -34,6 +40,7 @@ class Pagination extends Component {
         for (let i = 0; i < pages; i++) {
             iterator.push(i)
         }
+       
         return (
             <div id="pagination">
                 <nav aria-label="...">
@@ -63,19 +70,14 @@ class Pagination extends Component {
 
 const mapStateToProps = ({ phones }) => {
     return { stateFromMaps: phones }
-    //word users taken from reducer/index.js
-    // export default combineReducers({
-    //   phones
-    // })
-
 }
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        loadPhoneFormMap: () => dispatch(loadPhone()),
-        clickNextPage: () => dispatch(nextPage()),
-        clickPrevPage: () => dispatch(prevPage())
-        // switchPage:()=>dispatch(switchPage())
+        loadPhone: (offset) => dispatch(loadPhone(offset)),
+        clickNextPage: (offset) => dispatch(nextPage(offset)),
+        clickPrevPage: (offset) => dispatch(prevPage(offset)),
+        switchPage:(offset,switchToPage)=>dispatch(switchPage(offset,switchToPage))
     }
 }
 
