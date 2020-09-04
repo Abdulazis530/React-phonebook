@@ -12,29 +12,59 @@ const client = new ApolloClient({
 
 
 // start load user data
-export const loadPhoneSuccess = (phones) => ({
+export const loadPhoneSuccess = ({totalData,items}) => ({
   type: 'LOAD_PHONE_SUCCESS',
-  phones
+  totalData,
+  items
 })
 
 export const loadPhoneFailure = () => ({
   type: 'LOAD_PHONE_FAILURE'
 })
+// export const loadPhone = (offset=0,limit=5) => {
+//   const usersQuery = gql`
+//   query {
+//     phones{
+//       PhoneNumber
+//       Name
+//       id
+//     }
+//   }`;
+//   return dispatch => {
+//     return client.query({
+//       query: usersQuery,
+//     })
+//       .then(function (response) {
+//         console.log('test',response)
+//         console.log('test query ')
+//         dispatch(loadPhoneSuccess(response.data.phones))
+//       })
+//       .catch(function (error) {
+//         console.error(error);
+//         dispatch(loadPhoneFailure())
+//       });
+//   }
+// }
+ 
 
-export const loadPhone = () => {
+export const loadPhone = (offset=0,limit=5) => {
   const usersQuery = gql`
-  query {
-    phones{
-      PhoneNumber
-      Name
-      id
+  query{
+    phones(pagination:{offset: ${offset}, limit:${limit}}){
+       totalData
+       items{
+          id
+          Name
+          PhoneNumber
+       }
     }
-  }`;
+ }`
   return dispatch => {
     return client.query({
       query: usersQuery,
     })
       .then(function (response) {
+        console.log(response.data.phones)
         dispatch(loadPhoneSuccess(response.data.phones))
       })
       .catch(function (error) {
@@ -145,8 +175,7 @@ export const deletePhone = (id) => {
       showCloseButton: true,
       showLoaderOnConfirm: true
     }).then(result => {
-      console.log('test delete')
-      console.log(result)
+
       if (result.value) {
         dispatch(deletePhoneRedux(id))
         return client.mutate({
@@ -255,10 +284,6 @@ const updatePhoneFailure = (id) => ({
 })
 
 export const editUpdatePhone = (PhoneNumber, id, Name) => {
-  console.log('wqewqkelqweklqwekql;w')
-  console.log(PhoneNumber)
-  console.log(Name)
-  console.log(id)
   const updateQuery = gql`
   mutation updateContact($PhoneNumber: String!, $Name: String!,$id:ID!){
     updateContact(PhoneNumber: $PhoneNumber, Name: $Name,id:$id ){
@@ -353,3 +378,12 @@ export const editUpdatePhone = (PhoneNumber, id, Name) => {
 
 //   }
 // }
+
+
+  // query {
+  //   phones{
+  //     PhoneNumber
+  //     Name
+  //     id
+  //   }
+  // }`;

@@ -10,9 +10,11 @@ class PhoneList extends Component {
     this.props.loadPhoneFormMap();
   }
 
+
   render() {
+
     const nodes = this.props.stateFromMaps.map((item, index) => {
-      console.log(item.isEdit)
+
       return item.isEdit ?
 
         (
@@ -61,7 +63,7 @@ class PhoneList extends Component {
 }
 
 const mapStateToProps = ({ phones }) => {
-  console.log(phones)
+
   return { stateFromMaps: phones.phones }
   //word users taken from reducer/index.js
   // export default combineReducers({
@@ -71,7 +73,7 @@ const mapStateToProps = ({ phones }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log(dispatch)
+
   return {
     loadPhoneFormMap: () => dispatch(loadPhone())
   }

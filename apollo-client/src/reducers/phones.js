@@ -1,24 +1,29 @@
 let globalState = {
   phones: [],
-  isActive: false
+  isActive: false,
+  pages:0,
+  limit:5,
+  currentPage:1
 
 }
 
 const phones = (state = globalState, action) => {
   switch (action.type) {
     case 'LOAD_PHONE_SUCCESS':
+      console.log(action.totalData)
+    console.log(Number(Math.ceil(action.totalData/state.limit)))
       return {
         ...state,
-        phones: action.phones.map((item) => {
+        phones: action.items.map((item) => {
           item.added = true;
           item.isEdit = false
           return item
         }
-        )
+        ),
+        pages:Number(Math.ceil(action.totalData/state.limit))
       }
 
     case 'POST_PHONE':
-      console.log('kenapa lo ketriger dah')
       return {
         ...state,
         phones: [
@@ -46,21 +51,17 @@ const phones = (state = globalState, action) => {
       return state
 
     case 'POST_PHONE_FAILURE':
-      console.log(state)
       return {
         ...state,
         phones: state.phones.map((item) => {
           if (item.id === action.id) {
-            console.log('here')
             item.added = false;
           }
           return item
         })
       }
 
-    case 'TOGLE':
-      console.log('reducer TOGLE')
-
+    case 'TOGLE': 
       return {
         ...state,
         isActive: !state.isActive
@@ -70,7 +71,6 @@ const phones = (state = globalState, action) => {
         ...state,
         phones: state.phones.map((item) => {
           if (item.id === action.id) {
-            console.log('here')
             item.isEdit = true;
           }
           return item
@@ -81,7 +81,6 @@ const phones = (state = globalState, action) => {
         ...state,
         phones: state.phones.map((item) => {
           if (item.id === action.id) {
-            console.log('here')
             item.isEdit = false;
           }
           return item
@@ -105,9 +104,6 @@ const phones = (state = globalState, action) => {
         })
       }
     case 'UPDATE_PHONE':
-      console.log('test   ')
-      console.log(action)
-      console.log(state)
       return {
         ...state,
         phones: state.phones.map(item => {

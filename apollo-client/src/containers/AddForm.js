@@ -22,7 +22,6 @@ class Addform extends Component {
     }
 
     handleNameChange(event) {
-        console.log(event.target.name)
         this.setState({ Name: event.target.value });
     }
 
@@ -44,7 +43,7 @@ class Addform extends Component {
 
         return (
 
-            <div>
+            <div >
                 <div className="card text-left" >
                     <div className="card-header text-center font-weight-bold">
                         ADD CONTACT

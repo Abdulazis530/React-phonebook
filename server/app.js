@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const firebase = require("firebase");
 const bodyParser = require('body-parser');
-const {graphqlHTTP} = require("express-graphql");
+const { graphqlHTTP } = require("express-graphql");
 const cors = require("cors");
 
 const config = {

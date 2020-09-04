@@ -1,17 +1,34 @@
 
 const { GraphQLObjectType, GraphQLList } = require('graphql')
-const services = require('../../services');
+const {getPhones} = require('../../services');
 const { phoneType } = require('../types/phone')
+const PaginationArgType = require('../types/paginationParam');
+const PaginatedListType = require('../types/paginationOutput');
 
-// Query
+
 exports.queryType = new GraphQLObjectType({
   name: 'Query',
   fields: function () {
     return {
       phones: {
-        type: new GraphQLList(phoneType),
-        resolve: services.getPhones
+        type: PaginatedListType(phoneType),
+        args: {
+          pagination: {
+            type: PaginationArgType,
+            defaultValue: { offset: 0, limit: 5 }
+          },
+        },
+        resolve: async(root, args) => {
+          const { offset, limit } = args.pagination
+          const data=await getPhones(offset, limit)
+           console.log(data)
+          return {
+            items:data.listData,
+            totalData:data.totalData
+          }
+        }
       }
     }
   }
-});
+
+})

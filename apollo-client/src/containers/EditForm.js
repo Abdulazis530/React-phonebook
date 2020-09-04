@@ -8,23 +8,18 @@ class EditForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    console.log('here nrp')
-    console.log(props)
-    console.log(this.props)
+
   }
   handleCancel() {
-    console.log('tombol cancel')
+
     this.props.cancelEditContact()
   }
 
   handleChange(event) {
-    console.log(event.target.value)
+
     this.setState({ [event.target.name]: event.target.value })
   }
   handleSubmit(event) {
-    console.log("wkwkw")
-    console.log(this.state)
-    console.log(this.props)
     this.props.updateContact(this.state.Name, this.state.PhoneNumber)
     event.preventDefault()
   }
@@ -59,12 +54,10 @@ class EditForm extends Component {
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('pusing')
-  console.log(ownProps.id)
 
   return {
     cancelEditContact: () => dispatch(clickCancelEditAct(ownProps.id)),
-    updateContact: (Name, PhoneNumber) => dispatch(editUpdatePhone(PhoneNumber,ownProps.id, Name))
+    updateContact: (Name, PhoneNumber) => dispatch(editUpdatePhone(PhoneNumber, ownProps.id, Name))
   }
 }
 

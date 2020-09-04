@@ -1,16 +1,42 @@
 const firebase = require("firebase");
 
-const getPhones = () => {
+
+
+
+
+// const getPhones = () => {
+//   const phoneReference = firebase.database().ref("/Phones/");
+//   return (new Promise((resolve, reject) => {
+//     phoneReference.on("value", function (snapshot) {
+//       const folders = snapshot.val();
+//       console.log(folders)
+//       if (folders === null) {
+//         resolve([]);
+//       } else {
+//         const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]));
+//         console.log(data)
+//         resolve(data);
+//       }
+//       phoneReference.off("value");
+//     }, (errorObject) => {
+//       console.log("The read failed: " + errorObject.code);
+//       reject("The read failed: " + errorObject.code);
+//     });
+//   }));  
+// }
+const getPhones = (offset, limit) => {
   const phoneReference = firebase.database().ref("/Phones/");
   return (new Promise((resolve, reject) => {
     phoneReference.on("value", function (snapshot) {
       const folders = snapshot.val();
-      console.log(folders)
       if (folders === null) {
         resolve([]);
       } else {
-        const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]));
-        console.log(data)
+        const rows = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
+        const totalData = rows.length
+        const listData = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o])).splice(offset, limit);
+        const data = { totalData, listData }
+
         resolve(data);
       }
       phoneReference.off("value");
@@ -20,6 +46,7 @@ const getPhones = () => {
     });
   }));
 }
+
 
 //Create new instance
 const addPhones = (phone) => {

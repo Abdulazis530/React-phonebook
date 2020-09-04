@@ -10,8 +10,7 @@ class PhoneBox extends Component {
 
  
   render() {
-    console.log('PhoneBox')
-    console.log(this.props.stateFromMaps)
+ 
     return (
       <div>
         <Jumbotron />

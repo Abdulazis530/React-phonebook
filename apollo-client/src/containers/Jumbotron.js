@@ -32,7 +32,6 @@ const mapStateToProps = ({ phones }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log(dispatch)
    return {
     togleButtonCta: () => dispatch(TogleButtonCta())
     }
