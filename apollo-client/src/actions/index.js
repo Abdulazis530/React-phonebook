@@ -2,6 +2,7 @@ import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
 import Swal from 'sweetalert2'
 
+
 const API_URL = 'http://localhost:3001/graphql/'
 
 const client = new ApolloClient({
@@ -49,6 +50,47 @@ export const loadPhone = (offset = 0, limit = 5) => {
 
 // end load user data
 
+
+
+//start searchPhone
+export const searchPhones = (name, phone, offset = 0, limit = 5) => {
+  console.log(name, phone, offset, limit)
+  const searchQuery = gql`
+  query phones($name:String,$phone:String,$offset:Int,$limit:Int){
+    phones(name:$name,phone:$phone,pagination:{
+      offset:$offset,
+      limit:$limit
+    }){
+      totalData
+      items{
+        id
+        Name
+          PhoneNumber
+      }
+    }
+  }`
+  return dispatch => {
+    return client.query({
+      query: searchQuery,
+      variables: {
+        name,
+        phone,
+        offset,
+        limit
+      }
+    })
+      .then(response => {
+        console.log('tst', response)
+        dispatch(loadPhoneSuccess(response.data.phones))
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch(loadPhoneFailure())
+      })
+  }
+
+}
+
 // start post user data
 
 export const postPhoneSuccess = (phones) => ({
@@ -65,9 +107,8 @@ const postPhoneRedux = (PhoneNumber, Name, id) => ({
 })
 
 
-export const postPhone = (PhoneNumber,Name) => {
+export const postPhone = (PhoneNumber, Name) => {
   const id = Date.now()
-  console.log(typeof id)
   const addQuery = gql`
   mutation addContact($Name: String!, $PhoneNumber: String!,$id:ID!) {
     addContact(Name: $Name, PhoneNumber: $PhoneNumber,id:$id) {
@@ -162,7 +203,7 @@ export const deletePhone = (id) => {
           }
         })
           .then(function (response) {
-  
+
             dispatch(deletePhoneSuccess(response))
           })
           .catch(function (error) {

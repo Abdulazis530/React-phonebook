@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postPhone } from '../actions'
+import { postPhone,searchPhones } from '../actions'
 
 class SearchForm extends Component {
     constructor(props) {
@@ -16,12 +16,15 @@ class SearchForm extends Component {
     }
 
     handlePhoneNumberChange(event) {
-
+        
         this.setState({ PhoneNumber: event.target.value });
+        this.props.searchPhones(this.state.Name,event.target.value)
     }
 
     handleNameChange(event) {
         this.setState({ Name: event.target.value });
+        this.props.searchPhones(event.target.value,this.state.PhoneNumber)
+
     }
 
     render() {
@@ -56,7 +59,9 @@ class SearchForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    postPhone: (phoneNumber, Name, id) => dispatch(postPhone(phoneNumber, Name, id))
+    postPhone: (phoneNumber, Name, id) => dispatch(postPhone(phoneNumber, Name, id)),
+    searchPhones:(name,phoneNumber)=>dispatch(searchPhones(name,phoneNumber))
+
 })
 
 export default connect(
