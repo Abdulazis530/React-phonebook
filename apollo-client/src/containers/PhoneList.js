@@ -5,22 +5,18 @@ import { connect } from 'react-redux';
 import { loadPhone } from '../actions'
 
 class PhoneList extends Component {
-
   componentDidMount() {
     this.props.loadPhoneFormMap();
   }
 
 
   render() {
-
     const nodes = this.props.stateFromMaps.phones.map((item, index) => {
-
       return item.isEdit ?
-
         (
           <EditForm
             key={index}
-            index={this.props.stateFromMaps.offset+index+1}
+            index={this.props.stateFromMaps.offset + index + 1}
             phone={item.PhoneNumber}
             Name={item.Name}
             added={item.added}
@@ -31,15 +27,13 @@ class PhoneList extends Component {
         (
           <Phone
             key={index}
-            index={this.props.stateFromMaps.offset + index+1}
+            index={this.props.stateFromMaps.offset + index + 1}
             phone={item.PhoneNumber}
             Name={item.Name}
             added={item.added}
             id={item.id}
             edit={item.isEdit}
           />)
-
-
     })
     return (
       <div>
@@ -56,25 +50,13 @@ class PhoneList extends Component {
             {nodes}
           </tbody>
         </table>
-
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ phones }) => {
-
-  return { stateFromMaps: phones }
-
-
-}
-
-const mapDispatchToProps = (dispatch) => {
-
-  return {
-    loadPhoneFormMap: () => dispatch(loadPhone())
-  }
-}
+const mapStateToProps = ({ phones }) => ({ stateFromMaps: phones })
+const mapDispatchToProps = (dispatch) => ({ loadPhoneFormMap: () => dispatch(loadPhone()) })
 
 export default connect(
   mapStateToProps,

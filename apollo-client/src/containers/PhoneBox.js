@@ -7,10 +7,7 @@ import Pagination from './Pagination';
 import { connect } from 'react-redux';
 
 class PhoneBox extends Component {
-
- 
   render() {
- 
     return (
       <div>
         <Jumbotron />
@@ -37,10 +34,8 @@ class PhoneBox extends Component {
 }
 
 const mapStateToProps = ({ phones }) => {
-
   const {isActive}=phones
   return { stateFromMaps: isActive } 
-
 }
 
 export default connect(

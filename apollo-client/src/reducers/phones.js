@@ -5,14 +5,15 @@ let globalState = {
   limit: 5,
   currentPage: 1,
   offset: 0,
-
-
+  isSearchModeOn: false,
+  searchName: "",
+  searchPhone: "",
 }
 
 const phones = (state = globalState, action) => {
   switch (action.type) {
     case 'LOAD_PHONE_SUCCESS':
-    
+
       return {
         ...state,
         phones: action.items.map((item) => {
@@ -22,11 +23,12 @@ const phones = (state = globalState, action) => {
         }
         ),
         pages: Number(Math.ceil(action.totalData / state.limit)),
-        totalData:Number(action.totalData)
+        totalData: Number(action.totalData),
+
       }
 
     case 'POST_PHONE':
-  
+
       return {
         ...state,
         phones: [
@@ -42,7 +44,7 @@ const phones = (state = globalState, action) => {
       }
 
     case 'RESEND_PHONE_SUCCESS':
-      return {  
+      return {
         ...state,
         phones: state.phones.map((item) => {
           if (item.id === action.id) item.added = true
@@ -63,7 +65,7 @@ const phones = (state = globalState, action) => {
           return item
         })
       }
-      
+
     case 'TOGLE':
       return {
         ...state,
@@ -91,7 +93,7 @@ const phones = (state = globalState, action) => {
       }
 
     case 'DELETE_PHONE':
-  
+
       return {
         ...state,
         phones: state.phones.filter((item) => item.id !== action.id)
@@ -137,13 +139,27 @@ const phones = (state = globalState, action) => {
         offset: action.offset
 
       }
-      case 'SWITCH_PAGE':
-        return {
-          ...state,
-          currentPage:action.switchToPage,
-          offset: action.offset
-  
-        }
+    case 'SWITCH_PAGE':
+      return {
+        ...state,
+        currentPage: action.switchToPage,
+        offset: action.offset
+
+      }
+    case 'MODE_SEARCH_ACTIVE':
+      return {
+        ...state,
+        isSearchModeOn: true,
+        searchName: action.filter.name,
+        searchPhone: action.filter.phone
+      }
+    case 'MODE_SEARCH_INACTIVE':
+      return {
+        ...state,
+        isSearchModeOn: false,
+        searchName: "",
+        searchPhone: ""
+      }
     case 'LOAD_PHONE_FAILURE':
     case 'DELETE_PHONE_FAILURE':
     default:

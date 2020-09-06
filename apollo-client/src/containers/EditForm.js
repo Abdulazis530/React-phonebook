@@ -11,12 +11,10 @@ class EditForm extends Component {
 
   }
   handleCancel() {
-
     this.props.cancelEditContact()
   }
 
   handleChange(event) {
-
     this.setState({ [event.target.name]: event.target.value })
   }
   handleSubmit(event) {
@@ -28,38 +26,27 @@ class EditForm extends Component {
       <tr>
         <th scope="row">{this.props.index}</th>
         <td>
-
           <div className="form-row" onSubmit={this.handleSubmit}>
             <input type="text" className="form-control" name="Name" value={this.state.Name} onChange={this.handleChange} required={true} />
           </div>
-
         </td>
         <td>
-
           <div className="form-row" onSubmit={this.handleSubmit}>
             <input type="text" className="form-control" name="PhoneNumber" value={this.state.PhoneNumber} onChange={this.handleChange} required={true} />
           </div>
-
         </td>
         <td>
-
           <button type="submit" className="btn btn-outline-success mr-2" onClick={this.handleSubmit}><i className="fas fa-check"></i> Save</button>
           <button type="button" className="btn btn-outline-danger" onClick={this.handleCancel}><i className="fas fa-times"></i> Cancel</button>
-
-
         </td>
-
       </tr>
     )
   }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
-
-  return {
-    cancelEditContact: () => dispatch(clickCancelEditAct(ownProps.id)),
-    updateContact: (Name, PhoneNumber) => dispatch(editUpdatePhone(PhoneNumber, ownProps.id, Name))
-  }
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  cancelEditContact: () => dispatch(clickCancelEditAct(ownProps.id)),
+  updateContact: (Name, PhoneNumber) => dispatch(editUpdatePhone(PhoneNumber, ownProps.id, Name))
+})
 
 export default connect(
   null,

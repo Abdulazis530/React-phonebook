@@ -9,22 +9,18 @@ class PhoneForm extends Component {
       Name: "",
       PhoneNumber: ""
     }
-
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handlePhoneNumberChange(event) {
-
     this.setState({ PhoneNumber: event.target.value });
   }
 
   handleNameChange(event) {
     this.setState({ Name: event.target.value });
   }
-
-
 
   handleSubmit(event) {
     const id = Date.now()

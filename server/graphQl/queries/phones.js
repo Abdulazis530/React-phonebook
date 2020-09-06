@@ -21,13 +21,10 @@ exports.queryType = new GraphQLObjectType({
           },
         },
         resolve: async (root, args) => {
-          console.log('here wkwkwk')
           const { name, phone, pagination: { offset, limit } } = args
-          console.log(name,phone,offset,limit)
 
           if (name || phone) {
             const data = await searchPhones(name, phone, offset, limit)
-            console.log('inside query',data)
             return {
               items: data.listData,
               totalData: data.dataLength

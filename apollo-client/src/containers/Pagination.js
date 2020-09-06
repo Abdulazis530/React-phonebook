@@ -1,34 +1,55 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { loadPhone, nextPage, prevPage, switchPage } from '../actions'
+import { loadPhone, nextPage, prevPage, switchPage, searchPhones } from '../actions'
 
 class Pagination extends Component {
 
     handleClick = (event) => {
-        const { currentPage, limit } = this.props.stateFromMaps
+        const { currentPage, limit, searchName, searchPhone, isSearchModeOn } = this.props.stateFromMaps
+
         if (event.target.name === "previousPage") {
             const offset = (currentPage - 2) * limit
+
+            if (isSearchModeOn) {
+                this.props.searchPhones(searchName, searchPhone, offset)
+            } else {
+                this.props.loadPhone(offset)
+            }
             this.props.clickPrevPage(offset)
-            this.props.loadPhone(offset)
+
         } else if (event.target.name === "nextPage") {
             const offset = currentPage * limit
+
+            if (isSearchModeOn) {
+                this.props.searchPhones(searchName, searchPhone, offset)
+            } else {
+                this.props.loadPhone(offset)
+            }
             this.props.clickNextPage(offset)
-            this.props.loadPhone(offset)
         } else {
             const offset = (event.target.id - 1) * limit
             const switchToPage = Number(event.target.id)
+
+            if (isSearchModeOn) {
+                this.props.searchPhones(searchName, searchPhone, offset)
+            } else {
+                this.props.loadPhone(offset)
+            }
             this.props.switchPage(offset, switchToPage)
-            this.props.loadPhone(offset)
+
         }
         event.preventDefault()
     }
     render() {
+
         const { currentPage, pages } = this.props.stateFromMaps
         const iterator = []
+
         for (let i = 0; i < pages; i++) {
             iterator.push(i)
         }
         return (
+
             <div id="pagination">
                 <nav aria-label="...">
                     <ul className="pagination justify-content-center">
@@ -53,17 +74,15 @@ class Pagination extends Component {
 
 }
 
-const mapStateToProps = ({ phones }) => {
-    return { stateFromMaps: phones }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loadPhone: (offset) => dispatch(loadPhone(offset)),
-        clickNextPage: (offset) => dispatch(nextPage(offset)),
-        clickPrevPage: (offset) => dispatch(prevPage(offset)),
-        switchPage: (offset, switchToPage) => dispatch(switchPage(offset, switchToPage))
-    }
-}
+const mapStateToProps = ({ phones }) => ({ stateFromMaps: phones })
+const mapDispatchToProps = (dispatch) => ({
+    loadPhone: (offset) => dispatch(loadPhone(offset)),
+    clickNextPage: (offset) => dispatch(nextPage(offset)),
+    clickPrevPage: (offset) => dispatch(prevPage(offset)),
+    switchPage: (offset, switchToPage) => dispatch(switchPage(offset, switchToPage)),
+    searchPhones: (name, phoneNumber, offset) => dispatch(searchPhones(name, phoneNumber, offset))
+})
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

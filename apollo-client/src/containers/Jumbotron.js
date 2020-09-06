@@ -5,13 +5,13 @@ import { TogleButtonCta } from '../actions'
 
 
 class Jumbotron extends Component {
-    
-    handleClick=(event)=>{  
+
+    handleClick = (event) => {
         event.preventDefault()
         this.props.togleButtonCta()
     }
+
     render() {
-        
         return (
             <div className="jumbotron jumbotron-fluid">
                 <div className="container">
@@ -25,19 +25,12 @@ class Jumbotron extends Component {
 }
 
 const mapStateToProps = ({ phones }) => {
-
-    const {isActive}=phones
-    return { stateFromMaps: isActive } 
-
+    const { isActive } = phones
+    return { stateFromMaps: isActive }
 }
 
-const mapDispatchToProps = (dispatch) => {
-   return {
-    togleButtonCta: () => dispatch(TogleButtonCta())
-    }
-  }
+const mapDispatchToProps = (dispatch) => ({ togleButtonCta: () => dispatch(TogleButtonCta())})
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-
 )(Jumbotron)

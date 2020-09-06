@@ -9,7 +9,6 @@ class Addform extends Component {
             Name: "",
             PhoneNumber: ""
         }
-
         this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,7 +16,6 @@ class Addform extends Component {
     }
 
     handlePhoneNumberChange(event) {
-
         this.setState({ PhoneNumber: event.target.value });
     }
 

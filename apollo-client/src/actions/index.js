@@ -54,7 +54,6 @@ export const loadPhone = (offset = 0, limit = 5) => {
 
 //start searchPhone
 export const searchPhones = (name, phone, offset = 0, limit = 5) => {
-  console.log(name, phone, offset, limit)
   const searchQuery = gql`
   query phones($name:String,$phone:String,$offset:Int,$limit:Int){
     phones(name:$name,phone:$phone,pagination:{
@@ -80,7 +79,6 @@ export const searchPhones = (name, phone, offset = 0, limit = 5) => {
       }
     })
       .then(response => {
-        console.log('tst', response)
         dispatch(loadPhoneSuccess(response.data.phones))
       })
       .catch(error => {
@@ -91,6 +89,15 @@ export const searchPhones = (name, phone, offset = 0, limit = 5) => {
 
 }
 
+export const searchMode = (filter) => ({
+  type: "MODE_SEARCH_ACTIVE",
+  filter
+})
+
+export const cancelSearch = () => ({
+  type: "MODE_SEARCH_INACTIVE"
+}
+)
 // start post user data
 
 export const postPhoneSuccess = (phones) => ({

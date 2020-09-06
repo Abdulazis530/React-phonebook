@@ -2,33 +2,38 @@ const firebase = require("firebase");
 
 //load existing instance
 const getPhones = (offset, limit) => {
+
   const phoneReference = firebase.database().ref("/Phones/");
+
   return (new Promise((resolve, reject) => {
     phoneReference.on("value", function (snapshot) {
       const folders = snapshot.val();
+
       if (folders === null) {
         resolve([]);
       } else {
+
         const rows = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
         const totalData = rows.length
         const listData = rows.splice(offset, limit);
+
         resolve({ totalData, listData });
       }
       phoneReference.off("value");
     }, (errorObject) => {
+
       console.log("The read failed: " + errorObject.code);
       reject("The read failed: " + errorObject.code);
+
     });
   }));
 }
 
 //search existing instance
 const searchPhones = (name, phone, offset, limit) => {
-  console.log('inside seatchPhone')
-  console.log(name, phone)
+
   const regName = new RegExp(name, 'ig')
   const regPhone = new RegExp(phone, 'g')
-
   const phoneReference = firebase.database().ref("/Phones/");
 
   return (new Promise((resolve, reject) => {
@@ -39,23 +44,25 @@ const searchPhones = (name, phone, offset, limit) => {
       if (folders === null) {
         resolve([]);
       } else {
+
         const rows = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o])).filter(item => {
+
           if (name && phone) {
             return item.Name.match(regName) && item.PhoneNumber.match(regPhone)
           }else if(name) {
-            console.log('here')
             return item.Name.match(regName)
           }else if(phone) { 
             return item.PhoneNumber.match(regPhone)
           }else{
+            
           return false
             
           } 
         })
+
         const dataLength = rows.length
-        console.log(dataLength)
         const listData = rows.splice(offset, limit)
-        console.log(listData)
+
         resolve({ listData, dataLength });
       }
       phoneReference.off("value");
@@ -68,9 +75,10 @@ const searchPhones = (name, phone, offset, limit) => {
 
 //Create new instance
 const addPhones = (phone) => {
-  console.log('addeddata', phone)
+
   const referencePath = `/Phones/${phone.id}/`;
   const phoneReference = firebase.database().ref(referencePath);
+
   return (new Promise((resolve, reject) => {
     phoneReference.set({ Name: phone.Name, PhoneNumber: phone.PhoneNumber }, (error) => {
       if (error) {
@@ -85,8 +93,9 @@ const addPhones = (phone) => {
 //Update existing instance
 const updatePhone = (phone) => {
 
-  var referencePath = `/Phones/${phone.id}/`;
-  var phoneReference = firebase.database().ref(referencePath);
+  const referencePath = `/Phones/${phone.id}/`;
+  const phoneReference = firebase.database().ref(referencePath);
+
   return (new Promise((resolve, reject) => {
     phoneReference.update({ Name: phone.Name, PhoneNumber: phone.PhoneNumber }, (error) => {
       if (error) {
@@ -102,8 +111,9 @@ const updatePhone = (phone) => {
 //Delete an instance
 const deletePhone = (phone) => {
 
-  var referencePath = `/Phones/${phone.id}/`;
-  var phoneReference = firebase.database().ref(referencePath);
+  const referencePath = `/Phones/${phone.id}/`;
+  const phoneReference = firebase.database().ref(referencePath);
+  
   return (new Promise((resolve, reject) => {
     phoneReference.remove((error) => {
       if (error) {
